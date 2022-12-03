@@ -9,4 +9,5 @@ public class BattleUnit : MonoBehaviour
     public int damage;
     public int initialHP;
     public int currentHP;
+    public int level;
 }

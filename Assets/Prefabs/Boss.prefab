@@ -218,7 +218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1098734884, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -410,8 +410,9 @@ GameObject:
   - component: {fileID: 659095501683430579}
   - component: {fileID: 659095501683430577}
   - component: {fileID: 659095501683430576}
+  - component: {fileID: 5381944316068663211}
   m_Layer: 5
-  m_Name: Enemy
+  m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -438,7 +439,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 185, y: 3}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 135, y: 171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &659095501683430577
@@ -462,10 +463,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitSprite: {fileID: -1098734884, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  unitName: 
-  damage: 0
-  initialHP: 0
-  currentHP: 0
+  unitName: BOSS
+  damage: 2
+  initialHP: 10
+  currentHP: 10
+  level: 1
+--- !u!114 &5381944316068663211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659095501683430578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10965fa631cf9a449591da391e5e9ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 6255064098166711187}
+  damageText: {fileID: 5545201857631129695}
+  unitImage: {fileID: 659095500618488342}
+  hpSlider: {fileID: 659095501590201813}
 --- !u!1 &659095501946933343
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,10 +554,10 @@ RectTransform:
   m_Father: {fileID: 659095501683430579}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 96.6}
-  m_SizeDelta: {x: 0, y: -151}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 105.3}
+  m_SizeDelta: {x: 136, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8475784995443226413
 CanvasRenderer:
@@ -582,7 +600,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: THE BOSS(Lvl.1)
+  m_Text: 'THE BOSS
+
+    (Lvl.1)'
 --- !u!1 &7466717604258552856
 GameObject:
   m_ObjectHideFlags: 0

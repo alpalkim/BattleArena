@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1923969276, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -275,9 +275,10 @@ GameObject:
   m_Component:
   - component: {fileID: 253572538478065311}
   - component: {fileID: 253572538478065309}
-  - component: {fileID: 253572538478065308}
+  - component: {fileID: 4291230426863258561}
+  - component: {fileID: -7001522647861419489}
   m_Layer: 5
-  m_Name: Hero-1
+  m_Name: Hero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -303,9 +304,9 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 188.6, y: 94.4}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 67.5, y: 85.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &253572538478065309
@@ -316,7 +317,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253572538478065310}
   m_CullTransparentMesh: 1
---- !u!114 &253572538478065308
+--- !u!114 &4291230426863258561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -325,14 +326,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 253572538478065310}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc1ac41c8c3348b18e1bdea04147ccf7, type: 3}
+  m_Script: {fileID: 11500000, guid: 457a6402aa4d419894ba1dc219ea6d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSprite: {fileID: -1098734884, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  unitName: 
-  damage: 0
-  initialHP: 0
-  currentHP: 0
+  unitSprite: {fileID: -430252675, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
+  unitName: Fighter
+  damage: 2
+  initialHP: 5
+  currentHP: 5
+  level: 1
+  experience: 0
+--- !u!114 &-7001522647861419489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253572538478065310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10965fa631cf9a449591da391e5e9ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 6660611182109901247}
+  damageText: {fileID: 7071376323145934256}
+  unitImage: {fileID: 253572537413089338}
+  hpSlider: {fileID: 253572538724444153}
 --- !u!1 &253572538724444155
 GameObject:
   m_ObjectHideFlags: 0
