@@ -5,14 +5,22 @@ using UnityEngine;
 public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
 {
     protected BattleManager _battleManager;
-
+    
+    
+    [SerializeField] private GameObject _deadPanel;
     private UnitInfoUI _infoUI;
 
-    public Sprite unitSprite;
-    public string unitName;
-    public int damage;
-    public int initialHP;
-    public int currentHP;
+    public Sprite UnitSprite;
+    public string UnitName;
+    public int Damage;
+    public int InitialHP;
+    
+    private int _currentHP;
+    public int CurrentHP
+    {
+        get { return _currentHP; }
+        set { _currentHP = value; }
+    }
     public int level;
 
     protected WaitForSeconds _waitForAttackAnimation;
@@ -25,20 +33,22 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
         _waitForAttackAnimation = new WaitForSeconds(_attackAnimationDuration);
         _battleManager = battleManager;
         _infoUI = GetComponent<UnitInfoUI>();
+        CurrentHP = InitialHP;
     }
 
     public abstract void Attack();
 
     public void TakeDamage(int damageAmount)
     {
-        currentHP -= damageAmount;
-        if (currentHP <= 0) Die();
+        CurrentHP -= damageAmount;
+        if (CurrentHP <= 0) Die();
         _infoUI.UpdateUI();
     }
 
     public virtual void Die()
     {
-        currentHP = 0;
+        CurrentHP = 0;
+        _deadPanel.SetActive(true);
         // Die Animation
     }
 

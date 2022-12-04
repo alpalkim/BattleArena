@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Hero : BattleUnit
 {
     private int _experience;
-
+    
     public override void Init(BattleManager battleManager)
     {
         base.Init(battleManager);
@@ -23,7 +23,7 @@ public class Hero : BattleUnit
             return;
         }
 
-        if (currentHP <= 0)
+        if (CurrentHP <= 0)
         {
             Debug.Log("Dead heroes cannot attack");
             return;
@@ -45,13 +45,13 @@ public class Hero : BattleUnit
             () => { transform.DOMove(initialPosition, _attackAnimationDuration *0.4f).SetEase(Ease.InCirc); }
         );
         yield return _waitForAttackAnimation;
-        _battleManager.DamageBoss(damage);
+        _battleManager.DamageBoss(Damage);
         StopCoroutine(_heroAttackAnimationCoroutine);
     }
 
     private void OnBattleWon()
     {
-        if (currentHP > 0) IncreaseXP();
+        if (CurrentHP > 0) IncreaseXP();
     }
 
     private void IncreaseXP()
@@ -69,8 +69,8 @@ public class Hero : BattleUnit
     // The hero gets bonus for HP and damage whenever levels up
     private void GetBonusForLevellingUp()
     {
-        initialHP *= (int) 1.1f;
-        damage *= (int) 1.1f;
+        InitialHP *= (int) 1.1f;
+        Damage *= (int) 1.1f;
     }
 
     public override void Die()

@@ -9,13 +9,13 @@ public class BattleManager : MonoBehaviour
 {
     private BattleState _currentState;
 
-    public GameObject bossPrefab;
-    public GameObject heroPrefab;
+    [SerializeField] private GameObject bossPrefab;
+    [SerializeField] private GameObject heroPrefab;
 
-    public Transform bossTransform;
-    public Transform hero1Transform;
-    public Transform hero2Transform;
-    public Transform hero3Transform;
+    [SerializeField] private Transform bossTransform;
+    [SerializeField] private Transform hero1Transform;
+    [SerializeField] private Transform hero2Transform;
+    [SerializeField] private Transform hero3Transform;
 
     private BattleUnit _bossUnit;
     private BattleUnit _hero1Unit;
@@ -94,7 +94,7 @@ public class BattleManager : MonoBehaviour
     {
         _bossUnit.TakeDamage(damage);
 
-        if (_bossUnit.currentHP <= 0)
+        if (_bossUnit.CurrentHP <= 0)
             BattleWon();
         else
             BossTurn();

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,7 +15,7 @@ public class GameOver : MonoBehaviour
     public void SetPanel(bool isWin)
     {
         gameObject.SetActive(true);
-        _gameResultText.text = isWin ? "YOU WIN! \n\n Your alive heroes got experience point" : "You lose...\n\n Choose new heroes and try again.";
+        _gameResultText.text = isWin ? "YOU WIN! \n\n Your alive hero(es) got experience point" : "You lose...\n\n Choose new heroes and try again.";
     }
 
     private void OpenMainMenu() => SceneManager.LoadSceneAsync(0);

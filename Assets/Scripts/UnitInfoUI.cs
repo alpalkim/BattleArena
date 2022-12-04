@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,19 +16,19 @@ public class UnitInfoUI : MonoBehaviour
     {
         _battleUnit = GetComponent<BattleUnit>();
 
-        nameText.text = _battleUnit.unitName + "\n" + "(Lvl." + _battleUnit.level + ")";
-        damageText.text = "Damage: " + _battleUnit.damage;
-        HPText.text = "HP: " + _battleUnit.currentHP + "/" + _battleUnit.initialHP;
+        nameText.text = _battleUnit.UnitName + "\n" + "(Lvl." + _battleUnit.level + ")";
+        damageText.text = "Damage: " + _battleUnit.Damage;
+        HPText.text = "HP: " + _battleUnit.CurrentHP + "/" + _battleUnit.InitialHP;
 
-        hpSlider.value = _battleUnit.currentHP;
-        hpSlider.maxValue = _battleUnit.initialHP;
+        hpSlider.value = _battleUnit.CurrentHP;
+        hpSlider.maxValue = _battleUnit.InitialHP;
 
-        unitImage.sprite = _battleUnit.unitSprite;
+        unitImage.sprite = _battleUnit.UnitSprite;
     }
 
     public void UpdateUI()
     {
-        HPText.text = "HP: " + _battleUnit.currentHP + "/" + _battleUnit.initialHP;
-        hpSlider.value = _battleUnit.currentHP;
+        HPText.text = "HP: " + _battleUnit.CurrentHP + "/" + _battleUnit.InitialHP;
+        hpSlider.value = _battleUnit.CurrentHP;
     }
 }
