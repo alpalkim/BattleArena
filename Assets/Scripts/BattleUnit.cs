@@ -1,20 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(UnitInfoUI))]
+// [RequireComponent(typeof(UnitInfoUI))]
 public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
 {
     protected BattleManager _battleManager;
-    
+    protected HeroSelectionMenuController _heroSelectionController;
     
     [SerializeField] private GameObject _deadPanel;
-    private UnitInfoUI _infoUI;
+    protected UnitInfoUI _infoUI;
 
     public Sprite UnitSprite;
     public string UnitName;
     public int Damage;
     public int InitialHP;
     
+    public BattleUnitSO BattleUnitObject;
+    
+    [SerializeField] private Image unitImage;
+
     private int _currentHP;
     public int CurrentHP
     {
@@ -32,8 +37,19 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     {
         _waitForAttackAnimation = new WaitForSeconds(_attackAnimationDuration);
         _battleManager = battleManager;
-        _infoUI = GetComponent<UnitInfoUI>();
+        // _infoUI = GetComponent<UnitInfoUI>();
         CurrentHP = InitialHP;
+    }
+    
+    public virtual void Init(HeroSelectionMenuController heroSelectionController,BattleUnitSO battleUnitObject)
+    {
+        _heroSelectionController = heroSelectionController;
+        BattleUnitObject = battleUnitObject;
+        unitImage.sprite = battleUnitObject.UnitSprite;
+
+        BattleUnitObject.InitialHP += 13;
+        // _infoUI = GetComponent<UnitInfoUI>();
+        // _infoUI.Init(battleUnitObject);
     }
 
     public abstract void Attack();

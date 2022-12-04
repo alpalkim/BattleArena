@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hero
+    uniqueID: 2093691013
+    locked: 0
+  - name: InfoBubble
+    uniqueID: 1925737999
+    locked: 0

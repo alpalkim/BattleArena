@@ -8,12 +8,17 @@ using UnityEngine.UI;
 public class Hero : BattleUnit
 {
     private int _experience;
-    
     public override void Init(BattleManager battleManager)
     {
         base.Init(battleManager);
         GetComponent<Button>().onClick.AddListener(Attack);
         _battleManager.onBattleWon += OnBattleWon;
+    }
+    
+    public override void Init(HeroSelectionMenuController heroSelectionController,BattleUnitSO battleUnitObject)
+    {
+        base.Init(heroSelectionController,battleUnitObject);
+        GetComponent<Button>().onClick.AddListener(ShowInfoPopUp);
     }
     public override void Attack()
     {
@@ -77,5 +82,17 @@ public class Hero : BattleUnit
     {
         base.Die();
         _battleManager.RemoveHeroFromAliveList(this);
+    }
+
+    private void ShowInfoPopUp()
+    {
+        _heroSelectionController.ShowInfoPopUp(this);
+        GetComponent<Button>().onClick.AddListener(CloseInfoPopUp);
+    }
+    
+    private void CloseInfoPopUp()
+    {
+        _heroSelectionController.CloseInfoPopUp();
+        GetComponent<Button>().onClick.AddListener(ShowInfoPopUp);
     }
 }

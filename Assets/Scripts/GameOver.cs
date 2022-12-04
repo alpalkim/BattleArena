@@ -18,5 +18,5 @@ public class GameOver : MonoBehaviour
         _gameResultText.text = isWin ? "YOU WIN! \n\n Your alive hero(es) got experience point" : "You lose...\n\n Choose new heroes and try again.";
     }
 
-    private void OpenMainMenu() => SceneManager.LoadSceneAsync(0);
+    private void OpenMainMenu() => SceneManager.LoadScene(0);
 }
