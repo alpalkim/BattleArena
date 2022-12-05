@@ -11,8 +11,8 @@ public class BattleUnitInventorySO : ScriptableObject
     public void IncreaseFightCount()
     {
         _totalFightCount++;
-        
-        if (_totalFightCount % 5 == 0) 
+
+        if (_totalFightCount % 5 == 0)
             UnlockNewHero();
     }
 

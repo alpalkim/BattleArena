@@ -23,13 +23,13 @@ public class HeroSelectionMenuController : MonoBehaviour
         _infoUI = _infoPopUp.GetComponent<UnitInfoUI>();
         _battleButton.onClick.AddListener(OpenBattleScene);
     }
-    
+
     private void Start()
     {
         for (int i = 0; i < _heroInventory.BattleUnitObjects.Count; i++)
         {
             BattleUnit battleUnit = Instantiate(_heroObject, _heroContainerTransform).GetComponent<BattleUnit>();
-            battleUnit.Init(this,_heroInventory.BattleUnitObjects[i]);
+            battleUnit.Init(this, _heroInventory.BattleUnitObjects[i]);
             battleUnit.BattleUnitObject.IsSelected = false;
         }
     }
@@ -48,13 +48,13 @@ public class HeroSelectionMenuController : MonoBehaviour
         _selectedHeroCount++;
         UpdateBattleButton();
     }
-    
+
     public void DeselectHero(BattleUnit battleUnit)
     {
         _selectedHeroCount--;
         UpdateBattleButton();
     }
-    
+
     public void CloseInfoPopUp()
     {
         _infoPopUp.SetActive(false);
@@ -63,7 +63,7 @@ public class HeroSelectionMenuController : MonoBehaviour
     public void ShowInfoPopUp(BattleUnit battleUnit)
     {
         _infoUI.Init(battleUnit.BattleUnitObject);
-        _infoPopUp.transform.position= battleUnit.transform.position + _infoUIOffset;
+        _infoPopUp.transform.position = battleUnit.transform.position + _infoUIOffset;
         _infoPopUp.SetActive(true);
     }
 }

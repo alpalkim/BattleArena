@@ -6,12 +6,12 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
 {
     protected BattleManager _battleManager;
     protected HeroSelectionMenuController _heroSelectionController;
-    
+
     [SerializeField] private GameObject _deadPanel;
     [SerializeField] private BattleInfoUI _battleInfoUI;
-    
+
     public BattleUnitSO BattleUnitObject;
-    
+
     [SerializeField] private Image unitImage;
 
     public int CurrentHP { get; private set; }
@@ -21,7 +21,7 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     protected IEnumerator _heroAttackAnimationCoroutine;
     protected IEnumerator _bossAnimationCoroutine;
 
-    public virtual void Init(BattleManager battleManager,BattleUnitSO battleUnitObject)
+    public virtual void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
         _battleManager = battleManager;
         BattleUnitObject = battleUnitObject;
@@ -30,8 +30,8 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
         _waitForAttackAnimation = new WaitForSeconds(_attackAnimationDuration);
         _battleInfoUI.Init(this);
     }
-    
-    public virtual void Init(HeroSelectionMenuController heroSelectionController,BattleUnitSO battleUnitObject)
+
+    public virtual void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
     {
         _heroSelectionController = heroSelectionController;
         BattleUnitObject = battleUnitObject;
@@ -54,6 +54,4 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     }
 
     protected virtual void IncreaseLevel() => BattleUnitObject.Level++;
-
-    
 }

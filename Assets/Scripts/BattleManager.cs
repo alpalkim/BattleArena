@@ -19,7 +19,7 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private Text _gameStateInfoText;
     [SerializeField] private GameOver _gameOverPanel;
-    
+
     [SerializeField] private BattleUnitInventorySO _heroInventory;
 
     public delegate void OnBattleWon();
@@ -43,10 +43,10 @@ public class BattleManager : MonoBehaviour
     private void CreateBoss()
     {
         BattleUnit battleUnit = Instantiate(bossPrefab, bossTransform).GetComponent<BattleUnit>();
-        battleUnit.Init(this,battleUnit.BattleUnitObject);
+        battleUnit.Init(this, battleUnit.BattleUnitObject);
         _bossUnit = battleUnit;
     }
-    
+
     private void CreateHeroes()
     {
         int transformIndex = 0;
@@ -55,7 +55,7 @@ public class BattleManager : MonoBehaviour
             if (_heroInventory.BattleUnitObjects[i].IsSelected)
             {
                 BattleUnit battleUnit = Instantiate(heroPrefab, heroTransforms[transformIndex]).GetComponent<BattleUnit>();
-                battleUnit.Init(this,_heroInventory.BattleUnitObjects[i]);
+                battleUnit.Init(this, _heroInventory.BattleUnitObjects[i]);
                 _aliveHeros.Add(battleUnit);
                 transformIndex++;
             }
@@ -119,10 +119,10 @@ public class BattleManager : MonoBehaviour
         ChangeState(BattleState.Boss_Turn);
         _bossUnit.Attack();
     }
-    
+
     public bool IsPlayerTurn() => _currentState == BattleState.Player_Turn;
 
-    public void DamageHero(BattleUnit heroUnit,int damage)
+    public void DamageHero(BattleUnit heroUnit, int damage)
     {
         heroUnit.TakeDamage(damage);
         ChangeState(_aliveHeros.Count == 0 ? BattleState.Lose : BattleState.Player_Turn);

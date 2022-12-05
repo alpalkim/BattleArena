@@ -10,19 +10,21 @@ public class Hero : BattleUnit
     [SerializeField] private GameObject _selectionBorder;
     [SerializeField] private GameObject _selectionForeground;
     [SerializeField] private GameObject _lockedPanel;
-    public override void Init(BattleManager battleManager,BattleUnitSO battleUnitObject)
+
+    public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
-        base.Init(battleManager,battleUnitObject);
+        base.Init(battleManager, battleUnitObject);
         GetComponent<Button>().onClick.AddListener(Attack);
         _battleManager.onBattleWon += OnBattleWon;
     }
-    
-    public override void Init(HeroSelectionMenuController heroSelectionController,BattleUnitSO battleUnitObject)
+
+    public override void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
     {
-        base.Init(heroSelectionController,battleUnitObject);
+        base.Init(heroSelectionController, battleUnitObject);
         GetComponent<Button>().onClick.AddListener(OnHeroClick);
         _lockedPanel.SetActive(BattleUnitObject.IsLocked);
     }
+
     public override void Attack()
     {
         if (!_battleManager.IsPlayerTurn())
@@ -49,8 +51,8 @@ public class Hero : BattleUnit
 
         Vector3 initialPosition = transform.position;
 
-        transform.DOMove(_battleManager.GetBossLocation().position, _attackAnimationDuration*0.5f).SetEase(Ease.OutExpo).OnComplete(
-            () => { transform.DOMove(initialPosition, _attackAnimationDuration *0.4f).SetEase(Ease.InCirc); }
+        transform.DOMove(_battleManager.GetBossLocation().position, _attackAnimationDuration * 0.5f).SetEase(Ease.OutExpo).OnComplete(
+            () => { transform.DOMove(initialPosition, _attackAnimationDuration * 0.4f).SetEase(Ease.InCirc); }
         );
         yield return _waitForAttackAnimation;
         _battleManager.DamageBoss(BattleUnitObject.AttackPower);
@@ -77,8 +79,8 @@ public class Hero : BattleUnit
     // The hero gets bonus for HP and damage whenever levels up
     private void GetBonusForLevellingUp()
     {
-        BattleUnitObject.InitialHP = (int)(BattleUnitObject.InitialHP * 1.1f);
-        BattleUnitObject.AttackPower = (int)(BattleUnitObject.AttackPower * 1.1f);
+        BattleUnitObject.InitialHP = (int) (BattleUnitObject.InitialHP * 1.1f);
+        BattleUnitObject.AttackPower = (int) (BattleUnitObject.AttackPower * 1.1f);
     }
 
     public override void Die()
@@ -92,7 +94,7 @@ public class Hero : BattleUnit
         _heroSelectionController.ShowInfoPopUp(this);
         GetComponent<Button>().onClick.AddListener(CloseInfoPopUp);
     }
-    
+
     private void CloseInfoPopUp()
     {
         _heroSelectionController.CloseInfoPopUp();
@@ -101,20 +103,20 @@ public class Hero : BattleUnit
 
     private void OnHeroClick()
     {
+        if (BattleUnitObject.IsLocked)
+            return;
+
         if (BattleUnitObject.IsSelected)
         {
             ToggleSelectionUI();
             _heroSelectionController.DeselectHero(this);
             BattleUnitObject.IsSelected = false;
         }
-        else
+        else if (_heroSelectionController.CanSelectHero())
         {
-            if (_heroSelectionController.CanSelectHero())
-            {
-                _heroSelectionController.SelectHero(this);
-                ToggleSelectionUI();
-                BattleUnitObject.IsSelected = true;
-            }
+            _heroSelectionController.SelectHero(this);
+            ToggleSelectionUI();
+            BattleUnitObject.IsSelected = true;
         }
     }
 
