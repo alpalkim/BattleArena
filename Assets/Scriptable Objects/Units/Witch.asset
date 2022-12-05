@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Witch
   m_EditorClassIdentifier: 
   AttackPower: 5
-  InitialHP: 10
-  Level: 1
-  ExperiencePoint: 0
+  InitialHP: 15
+  Level: 6
+  ExperiencePoint: 7
   UnitSprite: {fileID: 370986135, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
   IsSelected: 0
   IsLocked: 1

@@ -2,26 +2,29 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class Hero : BattleUnit
+public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
 {
     [SerializeField] private GameObject _selectionBorder;
     [SerializeField] private GameObject _selectionForeground;
     [SerializeField] private GameObject _lockedPanel;
 
+    private Button _myButton;
+
     public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
         base.Init(battleManager, battleUnitObject);
-        GetComponent<Button>().onClick.AddListener(Attack);
+        // _myButton = GetComponent<Button>();//.onClick.AddListener(Attack);
         _battleManager.onBattleWon += OnBattleWon;
     }
 
     public override void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
     {
         base.Init(heroSelectionController, battleUnitObject);
-        GetComponent<Button>().onClick.AddListener(OnHeroClick);
+        // GetComponent<Button>().onClick.AddListener(OnHeroClick);
         _lockedPanel.SetActive(BattleUnitObject.IsLocked);
     }
 
@@ -92,13 +95,13 @@ public class Hero : BattleUnit
     private void ShowInfoPopUp()
     {
         _heroSelectionController.ShowInfoPopUp(this);
-        GetComponent<Button>().onClick.AddListener(CloseInfoPopUp);
+        // GetComponent<Button>().onClick.AddListener(CloseInfoPopUp);
     }
 
     private void CloseInfoPopUp()
     {
         _heroSelectionController.CloseInfoPopUp();
-        GetComponent<Button>().onClick.AddListener(ShowInfoPopUp);
+        // GetComponent<Button>().onClick.AddListener(ShowInfoPopUp);
     }
 
     private void OnHeroClick()
@@ -124,5 +127,47 @@ public class Hero : BattleUnit
     {
         _selectionBorder.SetActive(!_selectionBorder.activeSelf);
         _selectionForeground.SetActive(!_selectionForeground.activeSelf);
+    }
+    
+    private readonly float _holdThreshold = 1f;
+    private bool _isHoldCompleted;
+    private float _timer;
+    private Button _button;
+    
+    private Coroutine _holdRoutine;
+    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _holdRoutine = StartCoroutine(nameof(HoldTimerRoutine));
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (!_isHoldCompleted) OnHeroClick();
+        Stop();
+    }
+    
+    private IEnumerator HoldTimerRoutine()
+    {
+        _timer = 0;
+        _isHoldCompleted = false;
+        while (true)
+        {
+            _timer += Time.deltaTime;
+            if (_timer > _holdThreshold)
+            {
+                _isHoldCompleted = true;
+                ShowInfoPopUp();
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    private void Stop()
+    {
+        if(_holdRoutine != null) StopCoroutine(_holdRoutine);
+        _isHoldCompleted = false;
+        CloseInfoPopUp();
     }
 }
