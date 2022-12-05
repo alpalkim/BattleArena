@@ -10,6 +10,8 @@ public class BattleUnitSO : ScriptableObject
     public int Level;
     public int ExperiencePoint;
     public Sprite UnitSprite;
+    public bool IsSelected;
+    public bool IsLocked;
 
     private void Awake()
     {

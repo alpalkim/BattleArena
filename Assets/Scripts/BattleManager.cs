@@ -13,18 +13,14 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject heroPrefab;
 
     [SerializeField] private Transform bossTransform;
-    [SerializeField] private Transform hero1Transform;
-    [SerializeField] private Transform hero2Transform;
-    [SerializeField] private Transform hero3Transform;
+    [SerializeField] private Transform[] heroTransforms;
 
     private BattleUnit _bossUnit;
-    private BattleUnit _hero1Unit;
-    private BattleUnit _hero2Unit;
-    private BattleUnit _hero3Unit;
 
     [SerializeField] private Text _gameStateInfoText;
     [SerializeField] private GameOver _gameOverPanel;
     
+    [SerializeField] private BattleUnitInventorySO _heroInventory;
 
     public delegate void OnBattleWon();
 
@@ -36,24 +32,34 @@ public class BattleManager : MonoBehaviour
     {
         Init();
         _currentState = BattleState.Player_Turn;
-        _aliveHeros.Add(_hero1Unit);
-        _aliveHeros.Add(_hero2Unit);
-        _aliveHeros.Add(_hero3Unit);
     }
 
     private void Init()
     {
-        _bossUnit = CreateBattleUnit(bossPrefab, bossTransform);
-        _hero1Unit = CreateBattleUnit(heroPrefab, hero1Transform);
-        _hero2Unit = CreateBattleUnit(heroPrefab, hero2Transform);
-        _hero3Unit = CreateBattleUnit(heroPrefab, hero3Transform);
+        CreateBoss();
+        CreateHeroes();
     }
 
-    private BattleUnit CreateBattleUnit(GameObject prefabToBeInstatiated, Transform transformToBeSet)
+    private void CreateBoss()
     {
-        BattleUnit battleUnit = Instantiate(prefabToBeInstatiated, transformToBeSet).GetComponent<BattleUnit>();
-        battleUnit.Init(this);
-        return battleUnit;
+        BattleUnit battleUnit = Instantiate(bossPrefab, bossTransform).GetComponent<BattleUnit>();
+        battleUnit.Init(this,battleUnit.BattleUnitObject);
+        _bossUnit = battleUnit;
+    }
+    
+    private void CreateHeroes()
+    {
+        int transformIndex = 0;
+        for (int i = 0; i < _heroInventory.BattleUnitObjects.Count; i++)
+        {
+            if (_heroInventory.BattleUnitObjects[i].IsSelected)
+            {
+                BattleUnit battleUnit = Instantiate(heroPrefab, heroTransforms[transformIndex]).GetComponent<BattleUnit>();
+                battleUnit.Init(this,_heroInventory.BattleUnitObjects[i]);
+                _aliveHeros.Add(battleUnit);
+                transformIndex++;
+            }
+        }
     }
 
     public void OnFightStarted()
@@ -79,10 +85,12 @@ public class BattleManager : MonoBehaviour
                 break;
             case BattleState.Win:
                 _gameStateInfoText.text = "";
+                _heroInventory.IncreaseFightCount();
                 _gameOverPanel.SetPanel(true);
                 break;
             case BattleState.Lose:
                 _gameStateInfoText.text = "";
+                _heroInventory.IncreaseFightCount();
                 _gameOverPanel.SetPanel(false);
                 break;
             default:

@@ -276,8 +276,8 @@ GameObject:
   - component: {fileID: 253572538478065311}
   - component: {fileID: 253572538478065309}
   - component: {fileID: 4291230426863258561}
-  - component: {fileID: -7001522647861419489}
   - component: {fileID: 1011003333913276832}
+  - component: {fileID: 3580881542934965136}
   m_Layer: 5
   m_Name: HeroInBattle
   m_TagString: Untagged
@@ -331,29 +331,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 457a6402aa4d419894ba1dc219ea6d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitSprite: {fileID: 865684770, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  UnitName: Fighter
-  Damage: 2
-  InitialHP: 5
-  level: 1
   _deadPanel: {fileID: 5982848820845330195}
---- !u!114 &-7001522647861419489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253572538478065310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d10965fa631cf9a449591da391e5e9ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: {fileID: 6660611182109901247}
-  damageText: {fileID: 7071376323145934256}
-  HPText: {fileID: 253572538938755661}
+  BattleUnitObject: {fileID: 0}
   unitImage: {fileID: 253572537413089338}
-  hpSlider: {fileID: 253572538724444153}
+  _selectionBorder: {fileID: 0}
+  _selectionForeground: {fileID: 0}
+  _lockedPanel: {fileID: 0}
 --- !u!114 &1011003333913276832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +381,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3580881542934965136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253572538478065310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7249361ab06c49eb8335dd864ca983c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameText: {fileID: 6660611182109901247}
+  _attackPowerText: {fileID: 7071376323145934256}
+  _HPText: {fileID: 253572538938755661}
+  _hpSlider: {fileID: 253572538724444153}
 --- !u!1 &253572538724444155
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,7 +816,7 @@ GameObject:
   - component: {fileID: 3576162762243430267}
   - component: {fileID: 7071376323145934256}
   m_Layer: 5
-  m_Name: DamageText
+  m_Name: AttackPowerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

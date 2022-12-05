@@ -410,8 +410,8 @@ GameObject:
   - component: {fileID: 659095501683430579}
   - component: {fileID: 659095501683430577}
   - component: {fileID: 659095501683430576}
-  - component: {fileID: 5381944316068663211}
   - component: {fileID: 5438991022793532961}
+  - component: {fileID: 1328310034945164187}
   m_Layer: 5
   m_Name: Boss
   m_TagString: Untagged
@@ -465,28 +465,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deadPanel: {fileID: 2156030979267431037}
-  UnitSprite: {fileID: -1098734884, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  UnitName: BOSS
-  Damage: 3
-  InitialHP: 10
-  level: 1
---- !u!114 &5381944316068663211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 659095501683430578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d10965fa631cf9a449591da391e5e9ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: {fileID: 6255064098166711187}
-  damageText: {fileID: 5545201857631129695}
-  HPText: {fileID: 659095501334669409}
+  BattleUnitObject: {fileID: 11400000, guid: 7ce0e5e1a7df4004d87f2810af0fc7f4, type: 2}
   unitImage: {fileID: 659095500618488342}
-  hpSlider: {fileID: 659095501590201813}
 --- !u!114 &5438991022793532961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +511,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1328310034945164187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659095501683430578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7249361ab06c49eb8335dd864ca983c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameText: {fileID: 6255064098166711187}
+  _attackPowerText: {fileID: 5545201857631129695}
+  _HPText: {fileID: 659095501334669409}
+  _hpSlider: {fileID: 659095501590201813}
 --- !u!1 &659095501946933343
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +733,7 @@ GameObject:
   - component: {fileID: 6545958893374710256}
   - component: {fileID: 5545201857631129695}
   m_Layer: 5
-  m_Name: DamageText
+  m_Name: AttackPowerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -56,13 +56,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deadPanel: {fileID: 6110555168918636305}
-  UnitSprite: {fileID: 865684770, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  UnitName: Fighter
-  Damage: 2
-  InitialHP: 5
   BattleUnitObject: {fileID: 0}
   unitImage: {fileID: 4683815934641034674}
-  level: 1
+  _selectionBorder: {fileID: 5025390539559391927}
+  _selectionForeground: {fileID: 5025390538676863533}
+  _lockedPanel: {fileID: 6110555168918636305}
 --- !u!114 &706391055509604770
 MonoBehaviour:
   m_ObjectHideFlags: 0

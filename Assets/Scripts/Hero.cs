@@ -7,10 +7,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class Hero : BattleUnit
 {
-    private int _experience;
-    public override void Init(BattleManager battleManager)
+    [SerializeField] private GameObject _selectionBorder;
+    [SerializeField] private GameObject _selectionForeground;
+    [SerializeField] private GameObject _lockedPanel;
+    public override void Init(BattleManager battleManager,BattleUnitSO battleUnitObject)
     {
-        base.Init(battleManager);
+        base.Init(battleManager,battleUnitObject);
         GetComponent<Button>().onClick.AddListener(Attack);
         _battleManager.onBattleWon += OnBattleWon;
     }
@@ -18,7 +20,8 @@ public class Hero : BattleUnit
     public override void Init(HeroSelectionMenuController heroSelectionController,BattleUnitSO battleUnitObject)
     {
         base.Init(heroSelectionController,battleUnitObject);
-        GetComponent<Button>().onClick.AddListener(ShowInfoPopUp);
+        GetComponent<Button>().onClick.AddListener(OnHeroClick);
+        _lockedPanel.SetActive(BattleUnitObject.IsLocked);
     }
     public override void Attack()
     {
@@ -50,7 +53,7 @@ public class Hero : BattleUnit
             () => { transform.DOMove(initialPosition, _attackAnimationDuration *0.4f).SetEase(Ease.InCirc); }
         );
         yield return _waitForAttackAnimation;
-        _battleManager.DamageBoss(Damage);
+        _battleManager.DamageBoss(BattleUnitObject.AttackPower);
         StopCoroutine(_heroAttackAnimationCoroutine);
     }
 
@@ -61,8 +64,8 @@ public class Hero : BattleUnit
 
     private void IncreaseXP()
     {
-        _experience++;
-        if (_experience % 5 == 0) IncreaseLevel(); // The hero's level increases in every 5 experience points.
+        BattleUnitObject.ExperiencePoint++;
+        if (BattleUnitObject.ExperiencePoint % 5 == 0) IncreaseLevel(); // The hero's level increases in every 5 experience points.
     }
 
     protected override void IncreaseLevel()
@@ -74,8 +77,8 @@ public class Hero : BattleUnit
     // The hero gets bonus for HP and damage whenever levels up
     private void GetBonusForLevellingUp()
     {
-        InitialHP *= (int) 1.1f;
-        Damage *= (int) 1.1f;
+        BattleUnitObject.InitialHP = (int)(BattleUnitObject.InitialHP * 1.1f);
+        BattleUnitObject.AttackPower = (int)(BattleUnitObject.AttackPower * 1.1f);
     }
 
     public override void Die()
@@ -94,5 +97,30 @@ public class Hero : BattleUnit
     {
         _heroSelectionController.CloseInfoPopUp();
         GetComponent<Button>().onClick.AddListener(ShowInfoPopUp);
+    }
+
+    private void OnHeroClick()
+    {
+        if (BattleUnitObject.IsSelected)
+        {
+            ToggleSelectionUI();
+            _heroSelectionController.DeselectHero(this);
+            BattleUnitObject.IsSelected = false;
+        }
+        else
+        {
+            if (_heroSelectionController.CanSelectHero())
+            {
+                _heroSelectionController.SelectHero(this);
+                ToggleSelectionUI();
+                BattleUnitObject.IsSelected = true;
+            }
+        }
+    }
+
+    private void ToggleSelectionUI()
+    {
+        _selectionBorder.SetActive(!_selectionBorder.activeSelf);
+        _selectionForeground.SetActive(!_selectionForeground.activeSelf);
     }
 }
