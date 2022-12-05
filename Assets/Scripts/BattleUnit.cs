@@ -14,12 +14,7 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     
     [SerializeField] private Image unitImage;
 
-    private int _currentHP;
-    public int CurrentHP
-    {
-        get { return _currentHP; }
-        set { _currentHP = value; }
-    }
+    public int CurrentHP { get; private set; }
 
     protected WaitForSeconds _waitForAttackAnimation;
     protected float _attackAnimationDuration = 1f;
@@ -29,9 +24,9 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     public virtual void Init(BattleManager battleManager,BattleUnitSO battleUnitObject)
     {
         _battleManager = battleManager;
-        CurrentHP = BattleUnitObject.InitialHP;
         BattleUnitObject = battleUnitObject;
         unitImage.sprite = battleUnitObject.UnitSprite;
+        CurrentHP = battleUnitObject.InitialHP;
         _waitForAttackAnimation = new WaitForSeconds(_attackAnimationDuration);
         _battleInfoUI.Init(this);
     }
