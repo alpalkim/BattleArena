@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf105fdcb7684155ba3919c3893434da, type: 3}
   m_Name: Assasin
   m_EditorClassIdentifier: 
-  AttackPower: 160
-  InitialHP: 22
-  Level: 8
-  ExperiencePoint: 10
+  AttackPower: 10
+  InitialHP: 24
+  Level: 9
+  ExperiencePoint: 14
   UnitSprite: {fileID: 1859642851, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  IsSelected: 1
+  IsSelected: 0
   IsLocked: 0

@@ -339,11 +339,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10965fa631cf9a449591da391e5e9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 7766715967227834618}
-  damageText: {fileID: 7766715966474047849}
-  HPText: {fileID: 1785592275050116673}
-  Experience: {fileID: 7766715966859385739}
-  Level: {fileID: 7766715967277041614}
+  _nameText: {fileID: 7766715967227834618}
+  _damageText: {fileID: 7766715966474047849}
+  _hpText: {fileID: 1785592275050116673}
+  _experienceText: {fileID: 7766715966859385739}
+  _levelText: {fileID: 7766715967277041614}
 --- !u!1 &7766715966859385737
 GameObject:
   m_ObjectHideFlags: 0

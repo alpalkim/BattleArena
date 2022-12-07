@@ -3,18 +3,18 @@ using UnityEngine.UI;
 
 public class UnitInfoUI : MonoBehaviour
 {
-    [SerializeField] private Text nameText;
-    [SerializeField] private Text damageText;
-    [SerializeField] private Text HPText;
-    [SerializeField] private Text Experience;
-    [SerializeField] private Text Level;
+    [SerializeField] private Text _nameText;
+    [SerializeField] private Text _damageText;
+    [SerializeField] private Text _hpText;
+    [SerializeField] private Text _experienceText;
+    [SerializeField] private Text _levelText;
 
     public void Init(BattleUnitSO battleUnitObject)
     {
-        nameText.text = battleUnitObject.name;
-        damageText.text = battleUnitObject.AttackPower.ToString();
-        HPText.text = battleUnitObject.InitialHP.ToString();
-        Experience.text = battleUnitObject.ExperiencePoint.ToString();
-        Level.text = battleUnitObject.Level.ToString();
+        _nameText.text = battleUnitObject.name;
+        _damageText.text = battleUnitObject.GetAttackPower().ToString();
+        _hpText.text = battleUnitObject.GetHP().ToString();
+        _experienceText.text = battleUnitObject.GetExperiencePoint().ToString();
+        _levelText.text = battleUnitObject.GetLevel().ToString();
     }
 }

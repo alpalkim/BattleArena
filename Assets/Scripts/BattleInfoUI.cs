@@ -14,16 +14,16 @@ public class BattleInfoUI : MonoBehaviour
     {
         _battleUnit = battleUnit;
 
-        _nameText.text = _battleUnit.BattleUnitObject.name + "\n" + "(Lvl." + _battleUnit.BattleUnitObject.Level + ")";
-        _attackPowerText.text = "Damage: " + _battleUnit.BattleUnitObject.AttackPower;
-        _HPText.text = "HP: " + _battleUnit.CurrentHP + "/" + _battleUnit.BattleUnitObject.InitialHP;
-        _hpSlider.maxValue = _battleUnit.BattleUnitObject.InitialHP;
+        _nameText.text = _battleUnit.BattleUnitObject.name + "\n" + "(Lvl." + _battleUnit.BattleUnitObject.GetLevel() + ")";
+        _attackPowerText.text = "Damage: " + _battleUnit.BattleUnitObject.GetAttackPower();
+        _HPText.text = "HP: " + _battleUnit.CurrentHP + "/" + _battleUnit.BattleUnitObject.GetHP();
+        _hpSlider.maxValue = _battleUnit.BattleUnitObject.GetHP();
         _hpSlider.value = _battleUnit.CurrentHP;
     }
 
     public void UpdateUI()
     {
-        _HPText.text = "HP: " + _battleUnit.CurrentHP + "/" + _battleUnit.BattleUnitObject.InitialHP;
+        _HPText.text = "HP: " + _battleUnit.CurrentHP + "/" + _battleUnit.BattleUnitObject.GetHP();
         _hpSlider.value = _battleUnit.CurrentHP;
     }
 }

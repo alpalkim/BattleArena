@@ -17,7 +17,7 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     public int CurrentHP { get; private set; }
 
     protected WaitForSeconds _waitForAttackAnimation;
-    protected float _attackAnimationDuration = 1f;
+    protected float _attackAnimationDuration = GlobalSettings.AttackAnimationDuration;
     protected IEnumerator _heroAttackAnimationCoroutine;
     protected IEnumerator _bossAnimationCoroutine;
 
@@ -25,8 +25,8 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     {
         _battleManager = battleManager;
         BattleUnitObject = battleUnitObject;
-        unitImage.sprite = battleUnitObject.UnitSprite;
-        CurrentHP = battleUnitObject.InitialHP;
+        unitImage.sprite = battleUnitObject.GetUnitSprite();
+        CurrentHP = battleUnitObject.GetHP();
         _waitForAttackAnimation = new WaitForSeconds(_attackAnimationDuration);
         _battleInfoUI.Init(this);
     }
@@ -35,7 +35,7 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     {
         _heroSelectionController = heroSelectionController;
         BattleUnitObject = battleUnitObject;
-        unitImage.sprite = battleUnitObject.UnitSprite;
+        unitImage.sprite = battleUnitObject.GetUnitSprite();
     }
 
     public abstract void Battle();
@@ -53,5 +53,5 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
         _deadPanel.SetActive(true);
     }
 
-    protected virtual void IncreaseLevel() => BattleUnitObject.Level++;
+    protected virtual void IncreaseLevel() => BattleUnitObject.IncreaseLevel();
 }

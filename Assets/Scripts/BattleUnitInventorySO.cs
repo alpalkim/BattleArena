@@ -12,17 +12,17 @@ public class BattleUnitInventorySO : ScriptableObject
     {
         _totalFightCount++;
 
-        if (_totalFightCount % 5 == 0)
+        if (_totalFightCount % GlobalSettings.RequiredFightCountToUnlockNewHero == 0)
             UnlockNewHero();
     }
 
     private void UnlockNewHero()
     {
-        for (int i = 0; i < BattleUnitObjects.Count; i++)
+        for (int i = 0; i < BattleUnitObjects.Count; i++)   // To unlock next hero that is not unlocked yet.
         {
-            if (BattleUnitObjects[i].IsLocked)
+            if (BattleUnitObjects[i].IsUnitLocked())
             {
-                BattleUnitObjects[i].IsLocked = false;
+                BattleUnitObjects[i].UnlockUnit();
                 break;
             }
         }

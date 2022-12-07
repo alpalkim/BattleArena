@@ -26,12 +26,12 @@ public class Enemy : BattleUnit
             () => { transform.DOMove(initialPosition, _attackAnimationDuration*0.4f).SetEase(Ease.InCirc); }
         );
         yield return _waitForAttackAnimation;
-        _battleManager.DamageHero(_randomHeroToAttack,BattleUnitObject.AttackPower);
+        _battleManager.DamageHero(_randomHeroToAttack,BattleUnitObject.GetAttackPower());
     }
 
     public override void Die()
     {
         base.Die();
-        BattleUnitObject.Level++; //The boss' level will increase each time it dies
+        BattleUnitObject.IncreaseLevel(); //The boss' level will increase each time it dies
     }
 }

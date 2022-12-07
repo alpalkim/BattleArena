@@ -33,7 +33,7 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
     {
         base.Init(heroSelectionController, battleUnitObject);
         _actionOnClick = HeroSelection;
-        _lockedPanel.SetActive(BattleUnitObject.IsLocked);
+        _lockedPanel.SetActive(BattleUnitObject.IsUnitLocked());
     }
     
     private void OnHeroClick()
@@ -43,7 +43,7 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
     
     private void HeroSelection()
     {
-        if (BattleUnitObject.IsLocked)
+        if (BattleUnitObject.IsUnitLocked())
             return;
 
         if (BattleUnitObject.IsSelected)
@@ -90,7 +90,7 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
             () => { transform.DOMove(initialPosition, _attackAnimationDuration * 0.4f).SetEase(Ease.InCirc); }
         );
         yield return _waitForAttackAnimation;
-        _battleManager.DamageBoss(BattleUnitObject.AttackPower);
+        _battleManager.DamageBoss(BattleUnitObject.GetAttackPower());
         StopCoroutine(_heroAttackAnimationCoroutine);
     }
 
@@ -101,8 +101,8 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
 
     private void IncreaseXP()
     {
-        BattleUnitObject.ExperiencePoint++;
-        if (BattleUnitObject.ExperiencePoint % 5 == 0) IncreaseLevel(); // The hero's level increases in every 5 experience points.
+        BattleUnitObject.IncreaseExperiencePoint();
+        if (BattleUnitObject.GetExperiencePoint() % GlobalSettings.RequiredXPAmountToIncreaseLevel == 0) IncreaseLevel(); // The hero's level increases in every 5 experience points.
     }
 
     protected override void IncreaseLevel()
@@ -114,8 +114,8 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
     // The hero gets bonus for HP and damage whenever levels up
     private void GetBonusForLevellingUp()
     {
-        BattleUnitObject.InitialHP = (int) (BattleUnitObject.InitialHP * 1.1f);
-        BattleUnitObject.AttackPower = (int) (BattleUnitObject.AttackPower * 1.1f);
+        BattleUnitObject.IncreaseAttackPower(GlobalSettings.AttackPowerMultiplierForLevelingUp);
+        BattleUnitObject.IncreaseHP(GlobalSettings.HPMultiplierForLevelingUp);
     }
 
     public override void Die()
