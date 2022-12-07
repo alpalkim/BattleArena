@@ -143,12 +143,12 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         _selectionForeground.SetActive(!_selectionForeground.activeSelf);
     }
     
-    private readonly float _holdThreshold = 1f;
     private bool _isHoldCompleted;
     private float _timer;
     private Button _button;
     
     private Coroutine _holdRoutine;
+    private float _tapAndHoldDuration = GlobalSettings.TapAndHoldDuration;
     
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -168,7 +168,7 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         while (true)
         {
             _timer += Time.deltaTime;
-            if (_timer > _holdThreshold)
+            if (_timer > _tapAndHoldDuration)
             {
                 _isHoldCompleted = true;
                 ShowInfoPopUp();

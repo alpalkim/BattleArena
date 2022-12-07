@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +30,7 @@ public class BattleManager : MonoBehaviour
     public void OnEnable()
     {
         Init();
-        _currentState = BattleState.Player_Turn;
+        ChangeState(BattleState.Player_Turn);
     }
 
     private void Init()
