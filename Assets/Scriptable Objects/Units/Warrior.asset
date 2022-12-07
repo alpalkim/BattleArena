@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf105fdcb7684155ba3919c3893434da, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  AttackPower: 75
+  AttackPower: 50
   InitialHP: 125
   Level: 1
   ExperiencePoint: 0
