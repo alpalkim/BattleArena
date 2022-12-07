@@ -27,7 +27,7 @@ public class BattleManager : MonoBehaviour
     public event OnBattleWon onBattleWon;
 
     private readonly List<BattleUnit> _aliveHeros = new List<BattleUnit>();
-
+    
     public void OnEnable()
     {
         Init();
@@ -117,7 +117,7 @@ public class BattleManager : MonoBehaviour
     private void BossTurn()
     {
         ChangeState(BattleState.Boss_Turn);
-        _bossUnit.Attack();
+        _bossUnit.Battle();
     }
 
     public bool IsPlayerTurn() => _currentState == BattleState.Player_Turn;

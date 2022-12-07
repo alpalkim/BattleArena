@@ -13,22 +13,54 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
     [SerializeField] private GameObject _lockedPanel;
 
     private Button _myButton;
+    
+    [SerializeField]  private GameObject _infoPopUp;
+    [SerializeField] private UnitInfoUI _infoUI;
+    
+    
+    delegate void MyHeroAction(); 
+    MyHeroAction _actionOnClick;
 
     public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
         base.Init(battleManager, battleUnitObject);
-        // _myButton = GetComponent<Button>();//.onClick.AddListener(Attack);
+        _actionOnClick = Battle;
         _battleManager.onBattleWon += OnBattleWon;
+        _infoUI = _infoPopUp.GetComponent<UnitInfoUI>();
     }
 
     public override void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
     {
         base.Init(heroSelectionController, battleUnitObject);
-        // GetComponent<Button>().onClick.AddListener(OnHeroClick);
+        _actionOnClick = HeroSelection;
         _lockedPanel.SetActive(BattleUnitObject.IsLocked);
     }
+    
+    private void OnHeroClick()
+    {
+        _actionOnClick();
+    }
+    
+    private void HeroSelection()
+    {
+        if (BattleUnitObject.IsLocked)
+            return;
 
-    public override void Attack()
+        if (BattleUnitObject.IsSelected)
+        {
+            ToggleSelectionUI();
+            _heroSelectionController.DeselectHero(this);
+            BattleUnitObject.IsSelected = false;
+        }
+        else if (_heroSelectionController.CanSelectHero())
+        {
+            _heroSelectionController.SelectHero(this);
+            ToggleSelectionUI();
+            BattleUnitObject.IsSelected = true;
+        }
+    }
+
+    public override void Battle()
     {
         if (!_battleManager.IsPlayerTurn())
         {
@@ -92,36 +124,18 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         _battleManager.RemoveHeroFromAliveList(this);
     }
 
-    private void ShowInfoPopUp()
+    public void ShowInfoPopUp()
     {
-        _heroSelectionController.ShowInfoPopUp(this);
-        // GetComponent<Button>().onClick.AddListener(CloseInfoPopUp);
+        _infoUI.Init(BattleUnitObject);
+        _infoPopUp.SetActive(true);
     }
 
     private void CloseInfoPopUp()
     {
-        _heroSelectionController.CloseInfoPopUp();
-        // GetComponent<Button>().onClick.AddListener(ShowInfoPopUp);
+        _infoPopUp.SetActive(false);
     }
 
-    private void OnHeroClick()
-    {
-        if (BattleUnitObject.IsLocked)
-            return;
-
-        if (BattleUnitObject.IsSelected)
-        {
-            ToggleSelectionUI();
-            _heroSelectionController.DeselectHero(this);
-            BattleUnitObject.IsSelected = false;
-        }
-        else if (_heroSelectionController.CanSelectHero())
-        {
-            _heroSelectionController.SelectHero(this);
-            ToggleSelectionUI();
-            BattleUnitObject.IsSelected = true;
-        }
-    }
+    
 
     private void ToggleSelectionUI()
     {
@@ -170,4 +184,5 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         _isHoldCompleted = false;
         CloseInfoPopUp();
     }
+
 }

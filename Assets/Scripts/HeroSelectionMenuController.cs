@@ -10,17 +10,13 @@ public class HeroSelectionMenuController : MonoBehaviour
     [SerializeField] private Transform _heroContainerTransform;
     [SerializeField] private GameObject _heroObject;
     [SerializeField] private BattleUnitInventorySO _heroInventory;
-    [SerializeField] private GameObject _infoPopUp;
 
     private int _selectedHeroCount = 0;
 
-    private UnitInfoUI _infoUI;
 
-    private Vector3 _infoUIOffset = new Vector3(230f, 140f, 0);
 
     private void Awake()
     {
-        _infoUI = _infoPopUp.GetComponent<UnitInfoUI>();
         _battleButton.onClick.AddListener(OpenBattleScene);
     }
 
@@ -55,15 +51,4 @@ public class HeroSelectionMenuController : MonoBehaviour
         UpdateBattleButton();
     }
 
-    public void CloseInfoPopUp()
-    {
-        _infoPopUp.SetActive(false);
-    }
-
-    public void ShowInfoPopUp(BattleUnit battleUnit)
-    {
-        _infoUI.Init(battleUnit.BattleUnitObject);
-        _infoPopUp.transform.position = battleUnit.transform.position + _infoUIOffset;
-        _infoPopUp.SetActive(true);
-    }
 }
