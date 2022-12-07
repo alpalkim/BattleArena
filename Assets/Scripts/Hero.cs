@@ -105,9 +105,9 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         if (BattleUnitObject.GetExperiencePoint() % GlobalSettings.RequiredXPAmountToIncreaseLevel == 0) IncreaseLevel(); // The hero's level increases in every 5 experience points.
     }
 
-    protected override void IncreaseLevel()
+    private void IncreaseLevel()
     {
-        base.IncreaseLevel();
+        BattleUnitObject.IncreaseLevel();
         GetBonusForLevellingUp();
     }
 

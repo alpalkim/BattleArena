@@ -14,7 +14,7 @@ public class BattleInfoUI : MonoBehaviour
     {
         _battleUnit = battleUnit;
 
-        _nameText.text = _battleUnit.BattleUnitObject.name + "\n" + "(Lvl." + _battleUnit.BattleUnitObject.GetLevel() + ")";
+        _nameText.text = _battleUnit.BattleUnitObject.name;
         _attackPowerText.text = "Damage: " + _battleUnit.BattleUnitObject.GetAttackPower();
         _HPText.text = "HP: " + _battleUnit.CurrentHP + "/" + _battleUnit.BattleUnitObject.GetHP();
         _hpSlider.maxValue = _battleUnit.BattleUnitObject.GetHP();

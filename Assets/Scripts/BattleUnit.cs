@@ -52,6 +52,4 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
         CurrentHP = 0;
         _deadPanel.SetActive(true);
     }
-
-    protected virtual void IncreaseLevel() => BattleUnitObject.IncreaseLevel();
 }
