@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf105fdcb7684155ba3919c3893434da, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
-  AttackPower: 100
+  AttackPower: 75
   InitialHP: 100
   Level: 1
-  ExperiencePoint: 4
+  ExperiencePoint: 0
   UnitSprite: {fileID: -1494078900, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
   IsSelected: 0
-  IsLocked: 0
+  IsLocked: 1
