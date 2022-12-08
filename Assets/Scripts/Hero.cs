@@ -6,19 +6,22 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
+public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private GameObject _selectionBorder;
     [SerializeField] private GameObject _selectionForeground;
     [SerializeField] private GameObject _lockedPanel;
 
     private Button _myButton;
-    
-    [SerializeField]  private GameObject _infoPopUp;
+
+    [SerializeField] private GameObject _infoPopUp;
     [SerializeField] private UnitInfoUI _infoUI;
-    
-    
-    delegate void MyHeroAction(); 
+    [SerializeField] private Text _animatedText;
+
+
+
+    delegate void MyHeroAction();
+
     MyHeroAction _actionOnClick;
 
     public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
@@ -35,12 +38,12 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         _actionOnClick = HeroSelection;
         _lockedPanel.SetActive(BattleUnitObject.IsUnitLocked());
     }
-    
+
     private void OnHeroClick()
     {
         _actionOnClick();
     }
-    
+
     private void HeroSelection()
     {
         if (BattleUnitObject.IsUnitLocked())
@@ -102,8 +105,14 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
     private void IncreaseXP()
     {
         BattleUnitObject.IncreaseExperiencePoint();
-        if (BattleUnitObject.GetExperiencePoint() % GlobalSettings.RequiredXPAmountToIncreaseLevel == 0) IncreaseLevel(); // The hero's level increases in every 5 experience points.
+
+        if (BattleUnitObject.GetExperiencePoint() % GlobalSettings.RequiredXPAmountToIncreaseLevel == 0)
+            IncreaseLevel(); // The hero's level increases in every 5 experience points.
+        else
+            PlayAttributeIncreaseVFX("+1 XP");
     }
+
+    
 
     private void IncreaseLevel()
     {
@@ -114,8 +123,14 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
     // The hero gets bonus for HP and damage whenever levels up
     private void GetBonusForLevellingUp()
     {
-        BattleUnitObject.IncreaseAttackPower(GlobalSettings.AttackPowerMultiplierForLevelingUp);
-        BattleUnitObject.IncreaseHP(GlobalSettings.HPMultiplierForLevelingUp);
+
+        int increasedAttackPowerAmount = (int)(BattleUnitObject.GetAttackPower() * GlobalSettings.BonusPercentageForLevelingUp);
+        BattleUnitObject.IncreaseAttackPower(increasedAttackPowerAmount);
+        int increasedHPAmount = (int)(BattleUnitObject.GetHP() * GlobalSettings.BonusPercentageForLevelingUp);
+        BattleUnitObject.IncreaseHP(increasedHPAmount);
+
+        string increaseText = "+1 XP\n+1 Level\n+" + increasedAttackPowerAmount + " AP\n+"+ increasedHPAmount + " HP";
+        PlayAttributeIncreaseVFX(increaseText);
     }
 
     public override void Die()
@@ -135,21 +150,20 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         _infoPopUp.SetActive(false);
     }
 
-    
 
     private void ToggleSelectionUI()
     {
         _selectionBorder.SetActive(!_selectionBorder.activeSelf);
         _selectionForeground.SetActive(!_selectionForeground.activeSelf);
     }
-    
+
     private bool _isHoldCompleted;
     private float _timer;
     private Button _button;
-    
+
     private Coroutine _holdRoutine;
     private float _tapAndHoldDuration = GlobalSettings.TapAndHoldDuration;
-    
+
     public void OnPointerDown(PointerEventData eventData)
     {
         _holdRoutine = StartCoroutine(nameof(HoldTimerRoutine));
@@ -160,7 +174,7 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
         if (!_isHoldCompleted) OnHeroClick();
         Stop();
     }
-    
+
     private IEnumerator HoldTimerRoutine()
     {
         _timer = 0;
@@ -174,15 +188,37 @@ public class Hero : BattleUnit,IPointerDownHandler,IPointerUpHandler
                 ShowInfoPopUp();
                 yield break;
             }
+
             yield return null;
         }
     }
 
     private void Stop()
     {
-        if(_holdRoutine != null) StopCoroutine(_holdRoutine);
+        if (_holdRoutine != null) StopCoroutine(_holdRoutine);
         _isHoldCompleted = false;
         CloseInfoPopUp();
     }
+    
+    private void PlayAttributeIncreaseVFX(string attributeIncreaseText)
+    {
+        StartCoroutine(IncreaseVFX(attributeIncreaseText));
+    }
 
+
+    private IEnumerator IncreaseVFX(string text)
+    {
+        Vector2 initialPosition = _animatedText.transform.position;
+        _animatedText.text = text;
+        _animatedText.gameObject.SetActive(true);
+        _animatedText.transform.DOLocalMove(Vector3.up * 10, 2f);
+        yield return new WaitForSeconds(1f);
+        _animatedText.DOFade(0, 2f).OnComplete(() =>
+            {
+                _animatedText.gameObject.SetActive(false);
+                _animatedText.transform.position = initialPosition;
+
+            }
+        );;
+    }
 }

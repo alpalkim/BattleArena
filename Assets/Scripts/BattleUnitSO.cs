@@ -29,8 +29,8 @@ public class BattleUnitSO : ScriptableObject
     
     // Set Attributes
     public void UnlockUnit() => IsLocked = false;
-    public void IncreaseAttackPower(float increaseMultiplier) => AttackPower = (int) (AttackPower * increaseMultiplier);
-    public void IncreaseHP(float increaseMultiplier) => InitialHP = (int) (InitialHP * increaseMultiplier);
+    public void IncreaseAttackPower(int increaseAmount) => AttackPower += increaseAmount;
+    public void IncreaseHP(int increaseAmount) => InitialHP += increaseAmount;
     public void IncreaseLevel() => Level++;
     public void IncreaseExperiencePoint() => ExperiencePoint++;
 }
