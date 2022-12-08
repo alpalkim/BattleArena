@@ -63,8 +63,8 @@ MonoBehaviour:
   _selectionBorder: {fileID: 5025390539559391927}
   _selectionForeground: {fileID: 5025390538676863533}
   _lockedPanel: {fileID: 6110555168918636305}
-  _infoPopUp: {fileID: 7236995023833781815}
   _infoUI: {fileID: 7236995023833781814}
+  _animatedText: {fileID: 0}
 --- !u!114 &706391055509604770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,13 +630,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 310337300826181277}
     m_Modifications:
+    - target: {fileID: 3504952595119459559, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7766715966650410197, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
       propertyPath: m_Name
       value: InfoPopUp
       objectReference: {fileID: 0}
     - target: {fileID: 7766715966650410197, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7766715966650410198, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
       propertyPath: m_Pivot.x
@@ -734,14 +738,9 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7766715966650410196, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
   m_PrefabInstance: {fileID: 1127610352124343010}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7236995023833781815}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d10965fa631cf9a449591da391e5e9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7236995023833781815 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7766715966650410197, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
-  m_PrefabInstance: {fileID: 1127610352124343010}
-  m_PrefabAsset: {fileID: 0}

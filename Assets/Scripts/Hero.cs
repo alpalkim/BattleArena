@@ -8,6 +8,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 {
+    #region Variables
+
     [SerializeField] private GameObject _selectionBorder;
     [SerializeField] private GameObject _selectionForeground;
     [SerializeField] private GameObject _lockedPanel;
@@ -19,6 +21,10 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     
     delegate void HeroAction();
     HeroAction _heroActionOnClick;    // Since we are using same prefab on both screen, their action on click will change accordingly.
+    
+    #endregion
+
+    #region Initialization
 
     public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
@@ -43,6 +49,10 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         _heroAttributes = (HeroUnitSO)battleUnitObject;
         _infoUI.Init(_heroAttributes);
     }
+    
+    #endregion
+    
+    #region Hero Selection
 
     private void HeroSelection()
     {
@@ -63,7 +73,20 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
             ToggleHeroSelection(true);
         }
     }
+    
+    private void ToggleSelectionUI()
+    {
+        _selectionBorder.SetActive(!_selectionBorder.activeSelf);
+        _selectionForeground.SetActive(!_selectionForeground.activeSelf);
+    }
+    
+    public void ToggleHeroSelection(bool state) => _heroAttributes.IsSelected = state;
 
+
+    #endregion
+
+    #region Battle 
+    
     public override void Attack()
     {
         if (!_battleManager.IsPlayerTurn())
@@ -97,7 +120,16 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         _battleManager.DamageBoss(BattleUnitObject.GetAttackPower());
         StopCoroutine(_heroAttackAnimationCoroutine);
     }
+    public override void Die()
+    {
+        base.Die();
+        _battleManager.RemoveHeroFromAliveList(this);
+    }
 
+    #endregion
+
+    #region Battle End
+    
     private void OnBattleWon()
     {
         if (CurrentHP > 0) IncreaseXP();    // Only alive heroes can get XP
@@ -132,63 +164,10 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         PlayAttributeIncreaseVFX(increaseText);
     }
 
-    public override void Die()
-    {
-        base.Die();
-        _battleManager.RemoveHeroFromAliveList(this);
-    }
+    #region VFX
+
     
-    private void ToggleSelectionUI()
-    {
-        _selectionBorder.SetActive(!_selectionBorder.activeSelf);
-        _selectionForeground.SetActive(!_selectionForeground.activeSelf);
-    }
 
-    private bool _isHoldCompleted;
-    private float _timer;
-    private Button _button;
-    private Coroutine _holdRoutine;
-    private float _tapAndHoldDuration = GlobalSettings.TapAndHoldDuration;
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        _holdRoutine = StartCoroutine(nameof(HoldTimerRoutine));
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (!_isHoldCompleted) _heroActionOnClick();
-        StopHoldRoutine();
-    }
-
-    private IEnumerator HoldTimerRoutine()
-    {
-        _timer = 0;
-        _isHoldCompleted = false;
-        while (true)
-        {
-            _timer += Time.deltaTime;
-            if (_timer > _tapAndHoldDuration)
-            {
-                _isHoldCompleted = true;
-                ShowInfoPopUp();
-                yield break;
-            }
-
-            yield return null;
-        }
-    }
-
-    private void StopHoldRoutine()
-    {
-        if (_holdRoutine != null) StopCoroutine(_holdRoutine);
-        _isHoldCompleted = false;
-        CloseInfoPopUp();
-    }
-
-    private void ShowInfoPopUp() => _infoUI.gameObject.SetActive(true);
-    private void CloseInfoPopUp() => _infoUI.gameObject.SetActive(false);
-    
     private void PlayAttributeIncreaseVFX(string attributeIncreaseText)
     {
         StartCoroutine(IncreaseAttributeVFX(attributeIncreaseText));
@@ -210,6 +189,24 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
             }
         );;
     }
+    #endregion
 
-    public void ToggleHeroSelection(bool state) => _heroAttributes.IsSelected = state;
+    
+    #endregion
+
+    #region Inputs
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        _infoUI.OnPointerDown();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (!_infoUI._isHoldCompleted) _heroActionOnClick();
+        _infoUI.OnPointerUp();
+
+    }
+
+    #endregion
 }

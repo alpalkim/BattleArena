@@ -340,7 +340,6 @@ MonoBehaviour:
   _selectionBorder: {fileID: 0}
   _selectionForeground: {fileID: 0}
   _lockedPanel: {fileID: 0}
-  _infoPopUp: {fileID: 6714166034134067273}
   _infoUI: {fileID: 6714166034134067272}
   _animatedText: {fileID: 6858643779821020599}
 --- !u!114 &1011003333913276832
@@ -1076,13 +1075,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 253572538478065311}
     m_Modifications:
+    - target: {fileID: 3504952595119459559, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001586012184691444, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7766715966650410197, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
       propertyPath: m_Name
       value: InfoPopUp
       objectReference: {fileID: 0}
     - target: {fileID: 7766715966650410197, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7766715966650410198, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
       propertyPath: m_Pivot.x
@@ -1175,17 +1182,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7766715966650410196, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
   m_PrefabInstance: {fileID: 3955683754990668956}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6714166034134067273}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d10965fa631cf9a449591da391e5e9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6714166034134067273 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7766715966650410197, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
-  m_PrefabInstance: {fileID: 3955683754990668956}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6714166034134067274 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7766715966650410198, guid: 464da692436aefe47a8504f68e2c6079, type: 3}
