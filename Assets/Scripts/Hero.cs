@@ -18,14 +18,14 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private UnitInfoUI _infoUI;
     [SerializeField] private Text _animatedText;
 
-
-
+    private HeroUnitSO _heroAttributes;
+    
     delegate void MyHeroAction();
-
     MyHeroAction _actionOnClick;
 
     public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
+        _heroAttributes = (HeroUnitSO)battleUnitObject;
         base.Init(battleManager, battleUnitObject);
         _actionOnClick = Battle;
         _battleManager.onBattleWon += OnBattleWon;
@@ -34,32 +34,29 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     public override void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
     {
+        _heroAttributes = (HeroUnitSO)battleUnitObject;
         base.Init(heroSelectionController, battleUnitObject);
         _actionOnClick = HeroSelection;
-        _lockedPanel.SetActive(BattleUnitObject.IsUnitLocked());
-    }
-
-    private void OnHeroClick()
-    {
-        _actionOnClick();
+        _lockedPanel.SetActive(((HeroUnitSO)BattleUnitObject).IsUnitLocked());
     }
 
     private void HeroSelection()
     {
-        if (BattleUnitObject.IsUnitLocked())
+        if (_heroAttributes.IsUnitLocked())
             return;
 
-        if (BattleUnitObject.IsSelected)
+        if (_heroAttributes.IsSelected)
         {
             ToggleSelectionUI();
-            _heroSelectionController.DeselectHero(this);
-            BattleUnitObject.IsSelected = false;
+            _heroSelectionController.DeselectHero();
+            ToggleHeroSelection(false);
+
         }
         else if (_heroSelectionController.CanSelectHero())
         {
-            _heroSelectionController.SelectHero(this);
+            _heroSelectionController.SelectHero();
             ToggleSelectionUI();
-            BattleUnitObject.IsSelected = true;
+            ToggleHeroSelection(true);
         }
     }
 
@@ -104,19 +101,17 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     private void IncreaseXP()
     {
-        BattleUnitObject.IncreaseExperiencePoint();
+        _heroAttributes.IncreaseExperiencePoint();
 
-        if (BattleUnitObject.GetExperiencePoint() % GlobalSettings.RequiredXPAmountToIncreaseLevel == 0)
+        if (_heroAttributes.GetExperiencePoint() % GlobalSettings.RequiredXPAmountToIncreaseLevel == 0)
             IncreaseLevel(); // The hero's level increases in every 5 experience points.
         else
             PlayAttributeIncreaseVFX("+1 XP");
     }
 
-    
-
     private void IncreaseLevel()
     {
-        BattleUnitObject.IncreaseLevel();
+        _heroAttributes.IncreaseLevel();
         GetBonusForLevellingUp();
     }
 
@@ -124,10 +119,10 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     private void GetBonusForLevellingUp()
     {
 
-        int increasedAttackPowerAmount = (int)(BattleUnitObject.GetAttackPower() * GlobalSettings.BonusPercentageForLevelingUp);
-        BattleUnitObject.IncreaseAttackPower(increasedAttackPowerAmount);
-        int increasedHPAmount = (int)(BattleUnitObject.GetHP() * GlobalSettings.BonusPercentageForLevelingUp);
-        BattleUnitObject.IncreaseHP(increasedHPAmount);
+        int increasedAttackPowerAmount = (int)(_heroAttributes.GetAttackPower() * GlobalSettings.BonusPercentageForLevelingUp);
+        _heroAttributes.IncreaseAttackPower(increasedAttackPowerAmount);
+        int increasedHPAmount = (int)(_heroAttributes.GetHP() * GlobalSettings.BonusPercentageForLevelingUp);
+        _heroAttributes.IncreaseHP(increasedHPAmount);
 
         string increaseText = "+1 XP\n+1 Level\n+" + increasedAttackPowerAmount + " AP\n+"+ increasedHPAmount + " HP";
         PlayAttributeIncreaseVFX(increaseText);
@@ -141,7 +136,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     public void ShowInfoPopUp()
     {
-        _infoUI.Init(BattleUnitObject);
+        _infoUI.Init(_heroAttributes);
         _infoPopUp.SetActive(true);
     }
 
@@ -171,7 +166,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!_isHoldCompleted) OnHeroClick();
+        if (!_isHoldCompleted) _actionOnClick();
         Stop();
     }
 
@@ -221,4 +216,6 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
             }
         );;
     }
+
+    public void ToggleHeroSelection(bool state) => _heroAttributes.IsSelected = state;
 }

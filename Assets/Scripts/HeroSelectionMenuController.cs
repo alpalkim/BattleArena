@@ -9,12 +9,9 @@ public class HeroSelectionMenuController : MonoBehaviour
     [SerializeField] private Button _battleButton;
     [SerializeField] private Transform _heroContainerTransform;
     [SerializeField] private GameObject _heroObject;
-    [SerializeField] private BattleUnitInventorySO _heroInventory;
+    [SerializeField] private HeroInventorySO _heroInventory;
 
     private int _selectedHeroCount = 0;
-
-
-
     private void Awake()
     {
         _battleButton.onClick.AddListener(OpenBattleScene);
@@ -24,9 +21,9 @@ public class HeroSelectionMenuController : MonoBehaviour
     {
         for (int i = 0; i < _heroInventory.BattleUnitObjects.Count; i++)
         {
-            BattleUnit battleUnit = Instantiate(_heroObject, _heroContainerTransform).GetComponent<BattleUnit>();
-            battleUnit.Init(this, _heroInventory.BattleUnitObjects[i]);
-            battleUnit.BattleUnitObject.IsSelected = false;
+            Hero heroObject = Instantiate(_heroObject, _heroContainerTransform).GetComponent<Hero>();
+            heroObject.Init(this, _heroInventory.BattleUnitObjects[i]);
+            heroObject.ToggleHeroSelection(false);
         }
     }
 
@@ -39,16 +36,15 @@ public class HeroSelectionMenuController : MonoBehaviour
 
     public bool CanSelectHero() => _selectedHeroCount < 3;
 
-    public void SelectHero(BattleUnit battleUnit)
+    public void SelectHero()
     {
         _selectedHeroCount++;
         UpdateBattleButton();
     }
 
-    public void DeselectHero(BattleUnit battleUnit)
+    public void DeselectHero()
     {
         _selectedHeroCount--;
         UpdateBattleButton();
     }
-
 }

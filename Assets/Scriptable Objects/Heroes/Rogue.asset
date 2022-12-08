@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackPower: 250
   InitialHP: 10
+  UnitSprite: {fileID: -310838961, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
   Level: 1
   ExperiencePoint: 0
-  UnitSprite: {fileID: -310838961, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  IsSelected: 0
   IsLocked: 1
+  IsSelected: 0

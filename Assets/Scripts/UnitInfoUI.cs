@@ -9,7 +9,7 @@ public class UnitInfoUI : MonoBehaviour
     [SerializeField] private Text _experienceText;
     [SerializeField] private Text _levelText;
 
-    public void Init(BattleUnitSO battleUnitObject)
+    public void Init(HeroUnitSO battleUnitObject)
     {
         _nameText.text = battleUnitObject.name;
         _damageText.text = battleUnitObject.GetAttackPower().ToString();

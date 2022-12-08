@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf105fdcb7684155ba3919c3893434da, type: 3}
+  m_Script: {fileID: 11500000, guid: a676c1ad407a4b11bcee8559aa26821c, type: 3}
   m_Name: BOSS
   m_EditorClassIdentifier: 
   AttackPower: 75
   InitialHP: 250
-  Level: 1
-  ExperiencePoint: 0
   UnitSprite: {fileID: -1098734884, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
-  IsSelected: 0
-  IsLocked: 0

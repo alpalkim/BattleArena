@@ -6,15 +6,14 @@ using UnityEngine;
 public class Enemy : BattleUnit
 {
     private BattleUnit _randomHeroToAttack;
-    private readonly WaitForSeconds _waitForSeconds = new(1);
+    private readonly WaitForSeconds _waitForSeconds = new WaitForSeconds(1);
     public override void Battle()
     {
         _bossAnimationCoroutine = AttackAnimation();
         if (_bossAnimationCoroutine != null) StopCoroutine(_bossAnimationCoroutine);
         StartCoroutine(_bossAnimationCoroutine);
     }
-
-
+    
     private IEnumerator AttackAnimation()
     {
         yield return _waitForSeconds;
@@ -27,11 +26,5 @@ public class Enemy : BattleUnit
         );
         yield return _waitForAttackAnimation;
         _battleManager.DamageHero(_randomHeroToAttack,BattleUnitObject.GetAttackPower());
-    }
-
-    public override void Die()
-    {
-        base.Die();
-        BattleUnitObject.IncreaseLevel(); //The boss' level will increase each time it dies
     }
 }

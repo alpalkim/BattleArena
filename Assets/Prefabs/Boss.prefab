@@ -466,7 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deadPanel: {fileID: 2156030979267431037}
   _battleInfoUI: {fileID: 1328310034945164187}
-  BattleUnitObject: {fileID: 11400000, guid: 7ce0e5e1a7df4004d87f2810af0fc7f4, type: 2}
+  BattleUnitObject: {fileID: 11400000, guid: 5ed19eadac9b4d8429f13b740674c66b, type: 2}
   unitImage: {fileID: 659095500618488342}
 --- !u!114 &5438991022793532961
 MonoBehaviour:

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Inventory", menuName = "Units/Inventory")]
-public class BattleUnitInventorySO : ScriptableObject
+public class HeroInventorySO : ScriptableObject
 {
-    public List<BattleUnitSO> BattleUnitObjects;
+    public List<HeroUnitSO> BattleUnitObjects;
     private int _totalFightCount;
 
     public void IncreaseFightCount()

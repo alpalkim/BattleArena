@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf105fdcb7684155ba3919c3893434da, type: 3}
-  m_Name: Mage
+  m_Name: Assasin
   m_EditorClassIdentifier: 
-  AttackPower: 125
-  InitialHP: 30
+  AttackPower: 75
+  InitialHP: 20
+  UnitSprite: {fileID: 1859642851, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
   Level: 1
   ExperiencePoint: 0
-  UnitSprite: {fileID: 1064675865, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
+  IsLocked: 0
   IsSelected: 0
-  IsLocked: 1

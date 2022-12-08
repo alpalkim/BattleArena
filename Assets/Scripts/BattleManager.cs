@@ -19,7 +19,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private Text _gameStateInfoText;
     [SerializeField] private GameOver _gameOverPanel;
 
-    [SerializeField] private BattleUnitInventorySO _heroInventory;
+    [SerializeField] private HeroInventorySO _heroInventory;
 
     public delegate void OnBattleWon();
 
