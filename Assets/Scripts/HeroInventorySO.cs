@@ -6,7 +6,7 @@ using UnityEngine;
 public class HeroInventorySO : ScriptableObject
 {
     public List<HeroUnitSO> BattleUnitObjects;
-    private int _totalFightCount;
+    private int _totalFightCount = 0;
 
     public void IncreaseFightCount()
     {

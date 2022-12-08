@@ -23,3 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8dd5fbfbc3d0d184a8cf55c12d2f0702, type: 2}
   - {fileID: 11400000, guid: 42c5d7373bcbc5846bf19e1c0f74b48f, type: 2}
   - {fileID: 11400000, guid: a55f3d56b3eaa0346a56e213d0078eca, type: 2}
+  _totalFightCount: 0

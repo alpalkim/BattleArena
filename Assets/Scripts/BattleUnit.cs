@@ -23,9 +23,9 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
 
     public virtual void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
-        _battleManager = battleManager;
         BattleUnitObject = battleUnitObject;
         unitImage.sprite = battleUnitObject.GetUnitSprite();
+        _battleManager = battleManager;
         CurrentHP = battleUnitObject.GetHP();
         _waitForAttackAnimation = new WaitForSeconds(_attackAnimationDuration);
         _battleInfoUI.Init(this);
@@ -37,7 +37,6 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
         BattleUnitObject = battleUnitObject;
         unitImage.sprite = battleUnitObject.GetUnitSprite();
     }
-
     public abstract void Attack();
 
     public void TakeDamage(int damageAmount)

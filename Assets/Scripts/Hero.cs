@@ -12,7 +12,6 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private GameObject _selectionForeground;
     [SerializeField] private GameObject _lockedPanel;
     
-    [SerializeField] private GameObject _infoPopUp;
     [SerializeField] private UnitInfoUI _infoUI;
     [SerializeField] private Text _animatedText;
 
@@ -23,19 +22,26 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
-        _heroAttributes = (HeroUnitSO)battleUnitObject;
         base.Init(battleManager, battleUnitObject);
+        SetInitials(battleUnitObject);
+        
         _heroActionOnClick = Attack;
-        _battleManager.onBattleWon += OnBattleWon;  // Heroes that is on battle will be invoked if the battle is won 
-        _infoUI = _infoPopUp.GetComponent<UnitInfoUI>();
+        _battleManager.onBattleWon += OnBattleWon;  // Heroes that is on battle will be invoked if the battle is won
     }
 
     public override void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
     {
-        _heroAttributes = (HeroUnitSO)battleUnitObject;
         base.Init(heroSelectionController, battleUnitObject);
+        SetInitials(battleUnitObject);
+        
         _heroActionOnClick = HeroSelection;
-        _lockedPanel.SetActive(((HeroUnitSO)BattleUnitObject).IsUnitLocked());
+        _lockedPanel.SetActive(_heroAttributes.IsUnitLocked());
+    }
+
+    private void SetInitials(BattleUnitSO battleUnitObject)
+    {
+        _heroAttributes = (HeroUnitSO)battleUnitObject;
+        _infoUI.Init(_heroAttributes);
     }
 
     private void HeroSelection()
@@ -131,19 +137,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         base.Die();
         _battleManager.RemoveHeroFromAliveList(this);
     }
-
-    public void ShowInfoPopUp()
-    {
-        _infoUI.Init(_heroAttributes);
-        _infoPopUp.SetActive(true);
-    }
-
-    private void CloseInfoPopUp()
-    {
-        _infoPopUp.SetActive(false);
-    }
-
-
+    
     private void ToggleSelectionUI()
     {
         _selectionBorder.SetActive(!_selectionBorder.activeSelf);
@@ -153,7 +147,6 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     private bool _isHoldCompleted;
     private float _timer;
     private Button _button;
-
     private Coroutine _holdRoutine;
     private float _tapAndHoldDuration = GlobalSettings.TapAndHoldDuration;
 
@@ -192,6 +185,9 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         _isHoldCompleted = false;
         CloseInfoPopUp();
     }
+
+    private void ShowInfoPopUp() => _infoUI.gameObject.SetActive(true);
+    private void CloseInfoPopUp() => _infoUI.gameObject.SetActive(false);
     
     private void PlayAttributeIncreaseVFX(string attributeIncreaseText)
     {
