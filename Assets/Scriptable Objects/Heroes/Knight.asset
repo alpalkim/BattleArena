@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Knight
   m_EditorClassIdentifier: 
   AttackPower: 75
-  InitialHP: 75
+  InitialHP: 50
   UnitSprite: {fileID: -1494078900, guid: 059a94c87272b4444af87cdc6691311a, type: 3}
   Level: 1
   ExperiencePoint: 0
