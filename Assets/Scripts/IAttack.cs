@@ -1,4 +1,4 @@
 public interface IAttack
 {
-    public void Battle();
+    public void Attack();
 }

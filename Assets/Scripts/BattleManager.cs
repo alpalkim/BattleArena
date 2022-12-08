@@ -116,7 +116,7 @@ public class BattleManager : MonoBehaviour
     private void BossTurn()
     {
         ChangeState(BattleState.Boss_Turn);
-        _bossUnit.Battle();
+        _bossUnit.Attack();
     }
 
     public bool IsPlayerTurn() => _currentState == BattleState.Player_Turn;

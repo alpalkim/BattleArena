@@ -21,6 +21,7 @@ public class HeroSelectionMenuController : MonoBehaviour
     {
         for (int i = 0; i < _heroInventory.BattleUnitObjects.Count; i++)
         {
+            // Instantiate all heroes in inventory
             Hero heroObject = Instantiate(_heroObject, _heroContainerTransform).GetComponent<Hero>();
             heroObject.Init(this, _heroInventory.BattleUnitObjects[i]);
             heroObject.ToggleHeroSelection(false);
@@ -33,8 +34,8 @@ public class HeroSelectionMenuController : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-
-    public bool CanSelectHero() => _selectedHeroCount < 3;
+    
+    public bool CanSelectHero() => _selectedHeroCount < 3;  // Cannot select more than 3 heroes
 
     public void SelectHero()
     {

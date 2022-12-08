@@ -15,7 +15,7 @@ public class GameOver : MonoBehaviour
     public void SetPanel(bool isWin)
     {
         gameObject.SetActive(true);
-        _gameResultText.text = isWin ? "YOU WIN! \n\n Your alive hero(es) got experience point" : "You lose...\n\n Choose new heroes and try again.";
+        _gameResultText.text = isWin ? "YOU WIN! \n\n Your alive hero(es) got experience point" : "You lose...\n\n Try harder!";
     }
 
     private void OpenMainMenu() => SceneManager.LoadScene(0);

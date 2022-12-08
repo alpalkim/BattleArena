@@ -7,7 +7,7 @@ public class Enemy : BattleUnit
 {
     private BattleUnit _randomHeroToAttack;
     private readonly WaitForSeconds _waitForSeconds = new WaitForSeconds(1);
-    public override void Battle()
+    public override void Attack()
     {
         _bossAnimationCoroutine = AttackAnimation();
         if (_bossAnimationCoroutine != null) StopCoroutine(_bossAnimationCoroutine);

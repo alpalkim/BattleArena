@@ -38,7 +38,7 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
         unitImage.sprite = battleUnitObject.GetUnitSprite();
     }
 
-    public abstract void Battle();
+    public abstract void Attack();
 
     public void TakeDamage(int damageAmount)
     {

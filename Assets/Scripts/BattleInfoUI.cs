@@ -9,7 +9,6 @@ public class BattleInfoUI : MonoBehaviour
     [SerializeField] private Slider _hpSlider;
 
     private BattleUnit _battleUnit;
-
     public void Init(BattleUnit battleUnit)
     {
         _battleUnit = battleUnit;

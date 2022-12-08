@@ -11,24 +11,22 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private GameObject _selectionBorder;
     [SerializeField] private GameObject _selectionForeground;
     [SerializeField] private GameObject _lockedPanel;
-
-    private Button _myButton;
-
+    
     [SerializeField] private GameObject _infoPopUp;
     [SerializeField] private UnitInfoUI _infoUI;
     [SerializeField] private Text _animatedText;
 
     private HeroUnitSO _heroAttributes;
     
-    delegate void MyHeroAction();
-    MyHeroAction _actionOnClick;
+    delegate void HeroAction();
+    HeroAction _heroActionOnClick;    // Since we are using same prefab on both screen, their action on click will change accordingly.
 
     public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
         _heroAttributes = (HeroUnitSO)battleUnitObject;
         base.Init(battleManager, battleUnitObject);
-        _actionOnClick = Battle;
-        _battleManager.onBattleWon += OnBattleWon;
+        _heroActionOnClick = Attack;
+        _battleManager.onBattleWon += OnBattleWon;  // Heroes that is on battle will be invoked if the battle is won 
         _infoUI = _infoPopUp.GetComponent<UnitInfoUI>();
     }
 
@@ -36,7 +34,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     {
         _heroAttributes = (HeroUnitSO)battleUnitObject;
         base.Init(heroSelectionController, battleUnitObject);
-        _actionOnClick = HeroSelection;
+        _heroActionOnClick = HeroSelection;
         _lockedPanel.SetActive(((HeroUnitSO)BattleUnitObject).IsUnitLocked());
     }
 
@@ -60,7 +58,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         }
     }
 
-    public override void Battle()
+    public override void Attack()
     {
         if (!_battleManager.IsPlayerTurn())
         {
@@ -96,7 +94,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     private void OnBattleWon()
     {
-        if (CurrentHP > 0) IncreaseXP();
+        if (CurrentHP > 0) IncreaseXP();    // Only alive heroes can get XP
     }
 
     private void IncreaseXP()
@@ -112,11 +110,11 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     private void IncreaseLevel()
     {
         _heroAttributes.IncreaseLevel();
-        GetBonusForLevellingUp();
+        GetBonusForLevelingUp();
     }
 
     // The hero gets bonus for HP and damage whenever levels up
-    private void GetBonusForLevellingUp()
+    private void GetBonusForLevelingUp()
     {
 
         int increasedAttackPowerAmount = (int)(_heroAttributes.GetAttackPower() * GlobalSettings.BonusPercentageForLevelingUp);
@@ -166,8 +164,8 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (!_isHoldCompleted) _actionOnClick();
-        Stop();
+        if (!_isHoldCompleted) _heroActionOnClick();
+        StopHoldRoutine();
     }
 
     private IEnumerator HoldTimerRoutine()
@@ -188,7 +186,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         }
     }
 
-    private void Stop()
+    private void StopHoldRoutine()
     {
         if (_holdRoutine != null) StopCoroutine(_holdRoutine);
         _isHoldCompleted = false;
@@ -197,11 +195,11 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     
     private void PlayAttributeIncreaseVFX(string attributeIncreaseText)
     {
-        StartCoroutine(IncreaseVFX(attributeIncreaseText));
+        StartCoroutine(IncreaseAttributeVFX(attributeIncreaseText));
     }
 
 
-    private IEnumerator IncreaseVFX(string text)
+    private IEnumerator IncreaseAttributeVFX(string text)
     {
         Vector2 initialPosition = _animatedText.transform.position;
         _animatedText.text = text;
