@@ -26,15 +26,6 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
 
     #region Initialization
 
-    public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
-    {
-        base.Init(battleManager, battleUnitObject);
-        SetInitials(battleUnitObject);
-        
-        _heroActionOnClick = Attack;
-        _battleManager.onBattleWon += OnBattleWon;  // Heroes that is on battle will be invoked if the battle is won
-    }
-
     public override void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
     {
         base.Init(heroSelectionController, battleUnitObject);
@@ -43,7 +34,15 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
         _heroActionOnClick = HeroSelection;
         _lockedPanel.SetActive(_heroAttributes.IsUnitLocked());
     }
-
+    public override void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
+    {
+        base.Init(battleManager, battleUnitObject);
+        SetInitials(battleUnitObject);
+        
+        _heroActionOnClick = Attack;
+        _battleManager.onBattleWon += OnBattleWon;  // Heroes that is on battle will be invoked if the battle is won
+    }
+    
     private void SetInitials(BattleUnitSO battleUnitObject)
     {
         _heroAttributes = (HeroUnitSO)battleUnitObject;
@@ -64,7 +63,6 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
             ToggleSelectionUI();
             _heroSelectionController.DeselectHero();
             ToggleHeroSelection(false);
-
         }
         else if (_heroSelectionController.CanSelectHero())
         {
@@ -81,8 +79,7 @@ public class Hero : BattleUnit, IPointerDownHandler, IPointerUpHandler
     }
     
     public void ToggleHeroSelection(bool state) => _heroAttributes.IsSelected = state;
-
-
+    
     #endregion
 
     #region Battle 

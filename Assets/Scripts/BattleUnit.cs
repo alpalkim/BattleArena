@@ -9,11 +9,9 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
 
     [SerializeField] private GameObject _deadPanel;
     [SerializeField] private BattleInfoUI _battleInfoUI;
+    [SerializeField] private Image _unitImage;
 
     public BattleUnitSO BattleUnitObject;
-
-    [SerializeField] private Image unitImage;
-
     public int CurrentHP { get; private set; }
 
     protected WaitForSeconds _waitForAttackAnimation;
@@ -21,25 +19,28 @@ public abstract class BattleUnit : MonoBehaviour, IAttack, ITakeDamage
     protected IEnumerator _heroAttackAnimationCoroutine;
     protected IEnumerator _bossAnimationCoroutine;
 
+    // To be initialized from hero selection scene
+    public virtual void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
+    {
+        _heroSelectionController = heroSelectionController;
+        BattleUnitObject = battleUnitObject;
+        _unitImage.sprite = battleUnitObject.GetUnitSprite();
+    }
+
+    // To be initialized from battle scene 
     public virtual void Init(BattleManager battleManager, BattleUnitSO battleUnitObject)
     {
         BattleUnitObject = battleUnitObject;
-        unitImage.sprite = battleUnitObject.GetUnitSprite();
+        _unitImage.sprite = battleUnitObject.GetUnitSprite();
         _battleManager = battleManager;
         CurrentHP = battleUnitObject.GetHP();
         _waitForAttackAnimation = new WaitForSeconds(_attackAnimationDuration);
         _battleInfoUI.Init(this);
     }
 
-    public virtual void Init(HeroSelectionMenuController heroSelectionController, BattleUnitSO battleUnitObject)
-    {
-        _heroSelectionController = heroSelectionController;
-        BattleUnitObject = battleUnitObject;
-        unitImage.sprite = battleUnitObject.GetUnitSprite();
-    }
     public abstract void Attack();
 
-    public void TakeDamage(int damageAmount)
+    public void TakeDamage(int damageAmount)    //Generic method of taking damage for both hero and boss
     {
         CurrentHP -= damageAmount;
         if (CurrentHP <= 0) Die();

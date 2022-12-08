@@ -7,6 +7,7 @@ public class HeroInventorySO : ScriptableObject
 {
     public List<HeroUnitSO> BattleUnitObjects;
     private int _totalFightCount = 0;
+    private int _nextUnlockableHeroIndex = 3;   // Since we are already giving 3 heroes as unlocked initially, index of the next hero to be unlocked is 3.
 
     public void IncreaseFightCount()
     {
@@ -18,13 +19,9 @@ public class HeroInventorySO : ScriptableObject
 
     private void UnlockNewHero()
     {
-        for (int i = 0; i < BattleUnitObjects.Count; i++)   // To unlock next hero that is not unlocked yet.
-        {
-            if (BattleUnitObjects[i].IsUnitLocked())
-            {
-                BattleUnitObjects[i].UnlockUnit();
-                break;
-            }
-        }
+        if (BattleUnitObjects[_nextUnlockableHeroIndex] == null) return;
+        
+        BattleUnitObjects[_nextUnlockableHeroIndex].UnlockUnit();
+        _nextUnlockableHeroIndex++;
     }
 }

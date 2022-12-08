@@ -58,8 +58,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deadPanel: {fileID: 6110555168918636305}
   _battleInfoUI: {fileID: 0}
+  _unitImage: {fileID: 4683815934641034674}
   BattleUnitObject: {fileID: 0}
-  unitImage: {fileID: 4683815934641034674}
   _selectionBorder: {fileID: 5025390539559391927}
   _selectionForeground: {fileID: 5025390538676863533}
   _lockedPanel: {fileID: 6110555168918636305}

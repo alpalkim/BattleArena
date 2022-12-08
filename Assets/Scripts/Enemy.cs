@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : BattleUnit
 {
@@ -14,7 +15,7 @@ public class Enemy : BattleUnit
         StartCoroutine(_bossAnimationCoroutine);
     }
     
-    private IEnumerator AttackAnimation()
+    private IEnumerator AttackAnimation()   // Attack animation for boss
     {
         yield return _waitForSeconds;
         _battleManager.OnFightStarted();
@@ -27,4 +28,6 @@ public class Enemy : BattleUnit
         yield return _waitForAttackAnimation;
         _battleManager.DamageHero(_randomHeroToAttack,BattleUnitObject.GetAttackPower());
     }
+    
+    
 }

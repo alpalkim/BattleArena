@@ -4,6 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+public enum BattleState
+{
+    None,
+    Player_Turn,
+    Fight_Animation,
+    Boss_Turn,
+    Win,
+    Lose
+}
 public class BattleManager : MonoBehaviour
 {
     private BattleState _currentState;
@@ -46,7 +55,7 @@ public class BattleManager : MonoBehaviour
         _bossUnit = battleUnit;
     }
 
-    private void CreateHeroes()
+    private void CreateHeroes() // To instantiate selected heroes on main menu
     {
         int transformIndex = 0;
         for (int i = 0; i < _heroInventory.BattleUnitObjects.Count; i++)
@@ -66,6 +75,7 @@ public class BattleManager : MonoBehaviour
         ChangeState(BattleState.Fight_Animation);
     }
 
+    // There is state machine for battle system, only one state can be active at a time. The battle info or game over panel changes accordingly.
     private void ChangeState(BattleState newState)
     {
         _currentState = newState;
@@ -110,7 +120,7 @@ public class BattleManager : MonoBehaviour
     private void BattleWon()
     {
         ChangeState(BattleState.Win);
-        onBattleWon.Invoke();
+        onBattleWon.Invoke();   // Invoke to inform heroes that the battle is won, so that they can increase their XP
     }
 
     private void BossTurn()
@@ -121,27 +131,17 @@ public class BattleManager : MonoBehaviour
 
     public bool IsPlayerTurn() => _currentState == BattleState.Player_Turn;
 
-    public void DamageHero(BattleUnit heroUnit, int damage)
+    public void DamageHero(BattleUnit heroUnit, int damage) //Used by boss to attack hero
     {
         heroUnit.TakeDamage(damage);
-        ChangeState(_aliveHeros.Count == 0 ? BattleState.Lose : BattleState.Player_Turn);
+        ChangeState(_aliveHeros.Count == 0 ? BattleState.Lose : BattleState.Player_Turn);   // If all heroes died in the battle, then player loses.
     }
 
-    public void RemoveHeroFromAliveList(BattleUnit heroUnit) => _aliveHeros.Remove(heroUnit);
-    public Transform GetBossLocation() => _bossUnit.transform;
-
-    public BattleUnit GetRandomAliveHero()
+    public void RemoveHeroFromAliveList(BattleUnit heroUnit) => _aliveHeros.Remove(heroUnit);   // Heroes will inform battle manager when they die.
+    public Transform GetBossLocation() => _bossUnit.transform;  // Called by hero for attack animation
+    internal BattleUnit GetRandomAliveHero()  // Called by boss to attack a random hero
     {
         int randomIndex = Random.Range(0, _aliveHeros.Count);
         return _aliveHeros[randomIndex];
     }
-}
-
-public enum BattleState
-{
-    Player_Turn,
-    Fight_Animation,
-    Boss_Turn,
-    Win,
-    Lose
 }
